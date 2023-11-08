@@ -1,0 +1,71 @@
+{% extends "home/base.html"%}
+{% load static %}
+{% load static %}
+{% block content %}
+<section>
+  {% if breweries %}
+  <h2>Breweries in {{ city }}</h2>
+
+  <div class="grid-3-cols">
+    {% for brewery in breweries %}
+    <figure class="chair">
+      <div class="chair-box">
+        <h3>{{brewery.name}}</h3>
+        <ul class="chair-details">
+          <li>
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#000000" viewBox="0 0 256 256">
+              <path
+                d="M200,224H150.54A266.56,266.56,0,0,0,174,200.25c27.45-31.57,42-64.85,42-96.25a88,88,0,0,0-176,0c0,31.4,14.51,64.68,42,96.25A266.56,266.56,0,0,0,105.46,224H56a8,8,0,0,0,0,16H200a8,8,0,0,0,0-16ZM56,104a72,72,0,0,1,144,0c0,57.23-55.47,105-72,118C111.47,209,56,161.23,56,104Zm112,0a40,40,0,1,0-40,40A40,40,0,0,0,168,104Zm-64,0a24,24,0,1,1,24,24A24,24,0,0,1,104,104Z">
+              </path>
+            </svg>
+            <!-- Span is a generic INLINE text element, it doesn't have any meaning. It's like a div element, but inline -->
+            <span>{{brewery.address_1}},{{brewery.city}},{{breweryb.state_province}},{{brewery.postal_code}}</span>
+          </li>
+          <li>
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#000000" viewBox="0 0 256 256">
+              <path
+                d="M222.37,158.46l-47.11-21.11-.13-.06a16,16,0,0,0-15.17,1.4,8.12,8.12,0,0,0-.75.56L134.87,160c-15.42-7.49-31.34-23.29-38.83-38.51l20.78-24.71c.2-.25.39-.5.57-.77a16,16,0,0,0,1.32-15.06l0-.12L97.54,33.64a16,16,0,0,0-16.62-9.52A56.26,56.26,0,0,0,32,80c0,79.4,64.6,144,144,144a56.26,56.26,0,0,0,55.88-48.92A16,16,0,0,0,222.37,158.46ZM176,208A128.14,128.14,0,0,1,48,80,40.2,40.2,0,0,1,82.87,40a.61.61,0,0,0,0,.12l21,47L83.2,111.86a6.13,6.13,0,0,0-.57.77,16,16,0,0,0-1,15.7c9.06,18.53,27.73,37.06,46.46,46.11a16,16,0,0,0,15.75-1.14,8.44,8.44,0,0,0,.74-.56L168.89,152l47,21.05h0s.08,0,.11,0A40.21,40.21,0,0,1,176,208Z">
+              </path>
+            </svg>
+            <span>{{brewery.phone}}</span>
+          </li>
+          <li>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+              stroke="currentColor" class="chair-icon">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418" />
+            </svg>
+
+            <span>{{brewery.website_url}}</span>
+          </li>
+          <li>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+              stroke="currentColor" class="chair-icon">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" />
+            </svg>
+
+            <span>{{brewery.brewery_type}}</span>
+          </li>
+        </ul>
+        <div class="chair-price">
+          {% for review in Reviews%}
+          {% if review.id == b.id %}
+          <strong>{{review.rating}} *</strong>
+          {% else %}
+          <strong>0 *</strong>
+          {% endif %}
+          {% endfor %}
+          {% if user.is_authenticated %}
+          <a href="{% url 'review' %}" target="_blank" class="btn btn--small">Add review</a>
+          {% endif %}
+        </div>
+      </div>
+    </figure>
+    {% endfor %}
+  </div>
+  {% else %}
+  <h2>No breweries found in {{ city }}</h2>
+  {% endif %}
+</section>
+{% endblock %}
